@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Walnut Brewery — Cervejaria Artesanal Premium</title>
+  <meta name="description" content="Walnut Brewery — Cervejas artesanais feitas com paixão e ingredientes selecionados. Reserve seu barril de chopp para eventos online." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Pirata+One&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons (CDN) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ========== NAVBAR (aparece ao scrollar) ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-logo">
+      <a href="#inicio">
+        <img src="assets/icone-walnut.png" alt="Walnut Logo Icone" />
+      </a>
+    </div>
+    <div class="navbar-links">
+      <a href="#inicio">Início</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#colecao">Coleção</a>
+      <a href="#cervejas">Rótulos</a>
+      <a href="#pedidos">Fazer Pedido</a>
+      <a href="/admin" class="nav-admin-link" style="color: var(--gold-light); font-weight: 700; border: 1px dashed var(--gold); padding: 0.2rem 0.6rem; border-radius: var(--radius-sm);">Área Admin</a>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="inicio">
+    <img src="assets/logo-walnut.png" alt="Walnut Cervejaria Artesanal" class="hero-logo" />
+    <span class="cervejaria-text">Cervejaria Artesanal</span>
+    <h1 class="walnut-text">Walnut</h1>
+    <p>Cervejas artesanais feitas com paixão, ingredientes selecionados e o espírito da nossa cidade.</p>
+    <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="#cervejas" class="hero-cta">Conheça Nossos Rótulos</a>
+      <a href="#pedidos" class="hero-cta" style="background: var(--gold); color: var(--bg-deep); box-shadow: 0 0 20px rgba(212, 165, 50, 0.15);">Reservar Chopp</a>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <!-- ========== SOBRE ========== -->
+  <section class="about" id="sobre">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text fade-in">
+          <h2>A arte de <span>fazer cerveja</span></h2>
+          <p>
+            A Walnut nasceu da paixão por cervejas que contam uma história. Cada receita é pensada
+            para surpreender, usando ingredientes cuidadosamente selecionados e técnicas que respeitam
+            a tradição cervejeira.
+          </p>
+          <p>
+            Da nossa cidade para o seu copo — com muito sabor, personalidade e o carinho
+            que só uma cervejaria artesanal pode oferecer.
+          </p>
+        </div>
+        <div class="about-image fade-in">
+          <img src="assets/brewery-about.png" alt="Interior da cervejaria Walnut" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== NOSSA COLEÇÃO (MARQUEE INFINITO) ========== -->
+  <section class="marquee-section" id="colecao">
+    <div class="section-header-wrapper fade-in">
+      <h2 class="section-title">Nossa Coleção</h2>
+      <p class="section-subtitle">Toque em um rótulo para conhecer os detalhes de sabor e teor alcoólico logo abaixo.</p>
+    </div>
+    
+    <!-- Efeito fade nas laterais -->
+    <div class="marquee-wrapper">
+      <div class="marquee-fade-left"></div>
+      <div class="marquee-fade-right"></div>
+      
+      <!-- Container com animação CSS -->
+      <div class="marquee-container">
+        <div class="marquee-content">
+          <!-- Rótulos normais -->
+          <a href="#card-ipa" class="marquee-item">
+            <div class="marquee-card-img-holder">
+              <img src="assets/beer-ipa.png" alt="Walnut IPA" />
+            </div>
+            <span>Walnut IPA</span>
+          </a>
+          <a href="#card-pilsen" class="marquee-item">
+            <div class="marquee-card-img-holder">
+              <img src="assets/beer-pilsen.png" alt="Walnut Pilsen" />
+            </div>
+            <span>Walnut Pilsen</span>
+          </a>
+          <a href="#card-stout" class="marquee-item">
+            <div class="marquee-card-img-holder">
+              <img src="assets/beer-stout.png" alt="Walnut Stout" />
+            </div>
+            <span>Walnut Stout</span>
+          </a>
+          <a href="#card-wheat" class="marquee-item">
+            <div class="marquee-card-img-holder">
+              <img src="assets/beer-wheat.png" alt="Walnut Wheat" />
+            </div>
+            <span>Walnut Wheat</span>
+          </a>
+          <a href="#card-red-ale" class="marquee-item">
+            <div class="marquee-card-img-holder">
+              <img src="assets/beer-red-ale.png" alt="Walnut Red Ale" />
+            </div>
+            <span>Walnut Red Ale</span>
+          </a>
+          <a href="#card-porter" class="marquee-item">
+            <div class="marquee-card-img-holder">
+              <img src="assets/beer-porter.png" alt="Walnut Porter" />
+            </div>
+            <span>Walnut Porter</span>
+          </a>
+          
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CERVEJAS ========== -->
+  <section class="beers" id="cervejas">
+    <div class="container">
+      <h2 class="section-title fade-in">Nossos Rótulos</h2>
+      <p class="section-subtitle fade-in">Cada cerveja feita com dedicação e ingredientes especiais. Passe o mouse para descobrir mais.</p>
+
+      <div class="beers-grid">
+
+        <!-- Card 1 — IPA -->
+        <article class="beer-card fade-in" id="card-ipa">
+          <div class="beer-card-image">
+            <img src="assets/beer-ipa.png" alt="Walnut IPA" />
+            <span class="beer-badge">IPA</span>
+            <div class="beer-overlay">
+              <div class="stats">
+                <div class="stat">6.5%<small>ABV</small></div>
+                <div class="stat">55<small>IBU</small></div>
+              </div>
+              <p class="tasting-notes">Notas cítricas de maracujá e toranja, com final amargo equilibrado e corpo médio.</p>
+            </div>
+          </div>
+          <div class="beer-card-info">
+            <h3>Walnut IPA</h3>
+            <p class="beer-style">India Pale Ale</p>
+            <p>Lupulada e aromática, para quem gosta de intensidade no copo.</p>
+          </div>
+        </article>
+
+        <!-- Card 2 — Pilsen -->
+        <article class="beer-card fade-in" id="card-pilsen">
+          <div class="beer-card-image">
+            <img src="assets/beer-pilsen.png" alt="Walnut Pilsen" />
+            <span class="beer-badge">Pilsen</span>
+            <div class="beer-overlay">
+              <div class="stats">
+                <div class="stat">4.8%<small>ABV</small></div>
+                <div class="stat">20<small>IBU</small></div>
+              </div>
+              <p class="tasting-notes">Leve e refrescante, com sutil aroma floral e final seco e limpo.</p>
+            </div>
+          </div>
+          <div class="beer-card-info">
+            <h3>Walnut Pilsen</h3>
+            <p class="beer-style">Pilsner Lager</p>
+            <p>Clássica, leve e perfeita para qualquer momento.</p>
+          </div>
+        </article>
+
+        <!-- Card 3 — Stout -->
+        <article class="beer-card fade-in" id="card-stout">
+          <div class="beer-card-image">
+            <img src="assets/beer-stout.png" alt="Walnut Stout" />
+            <span class="beer-badge">Stout</span>
+            <div class="beer-overlay">
+              <div class="stats">
+                <div class="stat">7.2%<small>ABV</small></div>
+                <div class="stat">35<small>IBU</small></div>
+              </div>
+              <p class="tasting-notes">Sabor intenso de café e chocolate amargo, com textura aveludada e cremosa.</p>
+            </div>
+          </div>
+          <div class="beer-card-info">
+            <h3>Walnut Stout</h3>
+            <p class="beer-style">Dry Stout</p>
+            <p>Escura e encorpada, com notas de café e cacau.</p>
+          </div>
+        </article>
+
+        <!-- Card 4 — Wheat -->
+        <article class="beer-card fade-in" id="card-wheat">
+          <div class="beer-card-image">
+            <img src="assets/beer-wheat.png" alt="Walnut Wheat" />
+            <span class="beer-badge">Wheat</span>
+            <div class="beer-overlay">
+              <div class="stats">
+                <div class="stat">5.0%<small>ABV</small></div>
+                <div class="stat">15<small>IBU</small></div>
+              </div>
+              <p class="tasting-notes">Turbidez natural com notas de banana e cravo, refrescante e suave.</p>
+            </div>
+          </div>
+          <div class="beer-card-info">
+            <h3>Walnut Wheat</h3>
+            <p class="beer-style">Hefeweizen</p>
+            <p>Cerveja de trigo clássica, frutada e descomplicada.</p>
+          </div>
+        </article>
+
+        <!-- Card 5 — Red Ale -->
+        <article class="beer-card fade-in" id="card-red-ale">
+          <div class="beer-card-image">
+            <img src="assets/beer-red-ale.png" alt="Walnut Red Ale" />
+            <span class="beer-badge">Red Ale</span>
+            <div class="beer-overlay">
+              <div class="stats">
+                <div class="stat">5.5%<small>ABV</small></div>
+                <div class="stat">30<small>IBU</small></div>
+              </div>
+              <p class="tasting-notes">Malte caramelizado com toque tostado, amargor suave e final adocicado.</p>
+            </div>
+          </div>
+          <div class="beer-card-info">
+            <h3>Walnut Red Ale</h3>
+            <p class="beer-style">Irish Red Ale</p>
+            <p>Avermelhada e equilibrada, com notas de caramelo e toffee.</p>
+          </div>
+        </article>
+
+        <!-- Card 6 — Porter -->
+        <article class="beer-card fade-in" id="card-porter">
+          <div class="beer-card-image">
+            <img src="assets/beer-porter.png" alt="Walnut Porter" />
+            <span class="beer-badge">Porter</span>
+            <div class="beer-overlay">
+              <div class="stats">
+                <div class="stat">6.0%<small>ABV</small></div>
+                <div class="stat">28<small>IBU</small></div>
+              </div>
+              <p class="tasting-notes">Chocolate ao leite e biscoito amanteigado, com final levemente defumado.</p>
+            </div>
+          </div>
+          <div class="beer-card-info">
+            <h3>Walnut Porter</h3>
+            <p class="beer-style">Robust Porter</p>
+            <p>Robusta e complexa, com camadas de sabor em cada gole.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SEÇÃO DE RESERVAS DE CHOPP ========== -->
+  <section class="order-section" id="pedidos">
+    <!-- Efeitos Visuais Glow de Fundo -->
+    <div class="glow-blob gold"></div>
+    <div class="glow-blob dark"></div>
+    
+    <div class="container" style="position: relative; z-index: 10;">
+      <h2 class="section-title fade-in">Delivery de Chopp de Alto Padrão</h2>
+      <p class="section-subtitle fade-in">Agende o verdadeiro chopp artesanal padrão Walnut para o seu evento ou para a sua casa. Preencha os dados abaixo rapidamente para a sua reserva de entrega.</p>
+      
+      <!-- Conteiner da Reserva -->
+      <div id="order-container" class="fade-in">
+        <form class="order-form" id="order-form">
+          <div class="order-grid">
+            
+            <!-- Coluna Esquerda - Formulário -->
+            <div class="order-col">
+              
+              <!-- Seção 1: Dados do Cliente -->
+              <div class="form-block">
+                <h4 class="form-block-title">1. Seus Dados</h4>
+                <div class="order-field">
+                  <label for="nome">Nome Completo</label>
+                  <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required />
+                </div>
+                <div class="order-row">
+                  <div class="order-field">
+                    <label for="cpf">CPF</label>
+                    <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required />
+                  </div>
+                  <div class="order-field">
+                    <label for="celular">Celular (WhatsApp)</label>
+                    <input type="text" id="celular" name="celular" placeholder="(00) 00000-0000" required />
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Seção 2: O Chopp -->
+              <div class="form-block">
+                <h4 class="form-block-title">2. O Chopp</h4>
+                <div class="order-row">
+                  <div class="order-field">
+                    <label for="cerveja">Cerveja</label>
+                    <select id="cerveja" name="cerveja" required>
+                      <option value="" disabled selected>Escolha a cerveja</option>
+                      <option value="ipa">Walnut IPA (R$ 450,00 / R$ 680,00)</option>
+                      <option value="pilsen">Walnut Pilsen (R$ 380,00 / R$ 580,00)</option>
+                      <option value="stout">Walnut Stout (R$ 500,00 / R$ 750,00)</option>
+                      <option value="wheat">Walnut Wheat (R$ 420,00 / R$ 640,00)</option>
+                      <option value="red-ale">Walnut Red Ale (R$ 460,00 / R$ 700,00)</option>
+                      <option value="porter">Walnut Porter (R$ 480,00 / R$ 720,00)</option>
+                    </select>
+                  </div>
+                  <div class="order-field">
+                    <label for="tamanho">Tamanho do Barril</label>
+                    <select id="tamanho" name="tamanho" required>
+                      <option value="30">30 Litros</option>
+                      <option value="50">50 Litros</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Seção 3: Logística -->
+              <div class="form-block">
+                <h4 class="form-block-title">3. Logística</h4>
+                <div class="order-row">
+                  <div class="order-field">
+                    <label for="dataRetirada">Data de Início</label>
+                    <input type="date" id="dataRetirada" name="dataRetirada" required />
+                  </div>
+                  <div class="order-field">
+                    <label for="dataEntrega">Data de Devolução</label>
+                    <input type="date" id="dataEntrega" name="dataEntrega" required />
+                  </div>
+                </div>
+                
+                <div class="order-row">
+                  <div class="order-field">
+                    <label for="horario">Horário Preferido</label>
+                    <input type="time" id="horario" name="horario" required />
+                  </div>
+                  <div class="order-field">
+                    <label for="tipoFrete">Tipo de Entrega</label>
+                    <select id="tipoFrete" name="tipoFrete">
+                      <option value="retirada">Retirada no Local</option>
+                      <option value="entrega">Entrega (+ R$ 80,00)</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="order-field">
+                  <label id="local-label" for="local">Observações (opcional)</label>
+                  <input type="text" id="local" name="local" placeholder="Ex: Buscar na porta dos fundos..." />
+                </div>
+              </div>
+              
+            </div>
+            
+            <!-- Coluna Direita - Resumo -->
+            <div class="order-col">
+              <div class="order-summary glass">
+                <h3>Resumo da Reserva</h3>
+                <div class="summary-items">
+                  <div class="summary-row">
+                     <span>Cliente</span>
+                     <span id="summary-cliente">—</span>
+                  </div>
+                  <div class="summary-divider"></div>
+                  
+                  <div class="summary-row">
+                     <span>Cerveja</span>
+                     <span id="summary-cerveja">—</span>
+                  </div>
+                  <div class="summary-row">
+                     <span>Barril</span>
+                     <span id="summary-barril">30L</span>
+                  </div>
+                  <div class="summary-row">
+                     <span>Retirada</span>
+                     <span id="summary-retirada">—</span>
+                  </div>
+                  <div class="summary-row">
+                     <span>Devolução</span>
+                     <span id="summary-devolucao">—</span>
+                  </div>
+                  <div class="summary-divider"></div>
+                  <div class="summary-row">
+                     <span>Subtotal</span>
+                     <span id="summary-subtotal">—</span>
+                  </div>
+                  <div class="summary-row">
+                     <span>Frete/Taxa</span>
+                     <span id="summary-frete">Grátis</span>
+                  </div>
+                  <div class="summary-divider"></div>
+                  <div class="summary-row summary-total">
+                     <span>Total Estimado</span>
+                     <span id="summary-total">—</span>
+                  </div>
+                </div>
+                <button type="submit" class="order-btn" id="btn-submit-order">Finalizar Reserva</button>
+              </div>
+            </div>
+            
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ========== AGE BANNER ========== -->
+  <div class="age-banner">
+    <div class="container">
+      <p>🍺 Beba com moderação. Venda proibida para menores de 18 anos.</p>
+    </div>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" id="contato">
+    <div class="container">
+      <div class="footer-brand">
+        <h3>Walnut Brewery</h3>
+        <p>Cervejaria artesanal — da nossa cidade para o seu copo.</p>
+      </div>
+
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram" id="social-instagram">
+          <i data-lucide="instagram"></i>
+        </a>
+        <a href="#" aria-label="Facebook" id="social-facebook">
+          <i data-lucide="facebook"></i>
+        </a>
+        <a href="#" aria-label="WhatsApp" id="social-whatsapp">
+          <i data-lucide="message-circle"></i>
+        </a>
+        <a href="#" aria-label="E-mail" id="social-email">
+          <i data-lucide="mail"></i>
+        </a>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Walnut Brewery. Todos os direitos reservados. Projeto Acadêmico Java.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

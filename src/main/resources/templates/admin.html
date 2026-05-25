@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Walnut Brewery — Painel de Administração de Pedidos</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Pirata+One&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Reaproveitando variáveis do Design System Walnut */
+    :root {
+      --bg-deep: #020a14;
+      --bg-primary: #040f1a;
+      --bg-secondary: #081729;
+      --bg-card: #0c1e35;
+      --bg-glass: rgba(8, 23, 41, 0.6);
+      --gold: #d4a532;
+      --gold-light: #e8c05a;
+      --gold-dark: #a07820;
+      --white: #ffffff;
+      --cream: #f0ece4;
+      --gray-100: #c8c8c8;
+      --gray-200: #9a9a9a;
+      --gray-300: #666666;
+      --radius: 16px;
+      --radius-sm: 8px;
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
+      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-deep);
+      color: var(--cream);
+      line-height: 1.6;
+      padding: 3rem 1.5rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    /* Cabeçalho */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3rem;
+      border-bottom: 1px dashed rgba(212, 165, 50, 0.2);
+      padding-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.2rem;
+      color: var(--white);
+    }
+
+    h1 span {
+      color: var(--gold);
+      font-family: 'Pirata One', cursive;
+      font-size: 2.6rem;
+      letter-spacing: 0.05em;
+    }
+
+    .admin-subtitle {
+      color: var(--gray-200);
+      font-size: 0.95rem;
+      margin-top: 0.2rem;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7em 1.5em;
+      border: 1px solid var(--gold);
+      border-radius: 50px;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      transition: var(--transition);
+      background: transparent;
+    }
+
+    .back-btn:hover {
+      background: var(--gold);
+      color: var(--bg-deep);
+      box-shadow: 0 0 20px rgba(212, 165, 50, 0.2);
+    }
+
+    /* Cards de Estatísticas */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .stat-card {
+      background: rgba(8, 23, 41, 0.5);
+      border: 1px solid rgba(212, 165, 50, 0.1);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .stat-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--white);
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    .stat-desc {
+      font-size: 0.8rem;
+      color: var(--gray-200);
+    }
+
+    /* Tabela de Pedidos */
+    .table-container {
+      background: rgba(8, 23, 41, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    th {
+      background: rgba(4, 15, 26, 0.85);
+      color: var(--gold-light);
+      padding: 1.2rem 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      border-bottom: 2px solid rgba(212, 165, 50, 0.15);
+    }
+
+    td {
+      padding: 1.1rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--cream);
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: rgba(12, 30, 53, 0.4);
+    }
+
+    .beer-tag {
+      display: inline-block;
+      padding: 0.2em 0.8em;
+      background: rgba(212, 165, 50, 0.12);
+      border: 1px solid rgba(212, 165, 50, 0.3);
+      color: var(--gold-light);
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .frete-tag {
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .frete-tag.entrega { color: var(--gold-light); }
+    .frete-tag.retirada { color: var(--gray-200); }
+
+    .price-text {
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* Ações */
+    .delete-btn {
+      background: rgba(255, 80, 80, 0.1);
+      border: 1px solid rgba(255, 80, 80, 0.3);
+      color: #ff6b6b;
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: var(--transition);
+    }
+
+    .delete-btn:hover {
+      background: #ff5050;
+      color: var(--white);
+      box-shadow: 0 0 15px rgba(255, 80, 80, 0.3);
+    }
+
+    /* Estado Vazio */
+    .empty-state {
+      padding: 5rem 2rem;
+      text-align: center;
+      color: var(--gray-200);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      color: var(--gray-300);
+    }
+
+    @media (max-width: 768px) {
+      header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .back-btn { align-self: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- ========== CABEÇALHO ========== -->
+    <header>
+      <div>
+        <h1>Painel de Reservas — <span>Walnut Brewery</span></h1>
+        <p class="admin-subtitle">Área de Visualização Acadêmica do Professor — Gerenciamento e persistência de dados em H2</p>
+      </div>
+      <a href="/" class="back-btn">
+        <i data-lucide="arrow-left" style="width:16px; height:16px;"></i>
+        Voltar para o Site
+      </a>
+    </header>
+
+    <!-- ========== CARDS ESTATÍSTICOS ========== -->
+    <div class="stats-grid">
+      
+      <!-- Faturamento -->
+      <div class="stat-card">
+        <span class="stat-title">Faturamento Estimado</span>
+        <span class="stat-value" th:text="${'R$ ' + #numbers.formatDecimal(totalFaturamento, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</span>
+        <span class="stat-desc">Soma do valor de todas as reservas</span>
+      </div>
+
+      <!-- Reservas Totais -->
+      <div class="stat-card">
+        <span class="stat-title">Total de Reservas</span>
+        <span class="stat-value" th:text="${totalPedidos}">0</span>
+        <span class="stat-desc">Pedidos persistidos no Banco H2</span>
+      </div>
+
+      <!-- Barris 30L -->
+      <div class="stat-card">
+        <span class="stat-title">Barris de 30L</span>
+        <span class="stat-value" th:text="${barris30}">0</span>
+        <span class="stat-desc">Volume mais leve e ágil</span>
+      </div>
+
+      <!-- Barris 50L -->
+      <div class="stat-card">
+        <span class="stat-title">Barris de 50L</span>
+        <span class="stat-value" th:text="${barris50}">0</span>
+        <span class="stat-desc">Volume para grandes eventos</span>
+      </div>
+
+    </div>
+
+    <!-- ========== TABELA DE REGISTROS ========== -->
+    <div class="table-container">
+      
+      <!-- Caso existam registros no banco -->
+      <table th:if="${totalPedidos > 0}" id="pedidos-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Data do Pedido</th>
+            <th>Cliente (CPF)</th>
+            <th>Celular</th>
+            <th>Cerveja</th>
+            <th>Barril</th>
+            <th>Periodo</th>
+            <th>Horario</th>
+            <th>Frete</th>
+            <th>Endereço/Obs</th>
+            <th>Total</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="pedido : ${pedidos}" th:id="${'row-' + pedido.id}">
+            <td th:text="${pedido.id}">1</td>
+            <td th:text="${#temporals.format(pedido.dataPedido, 'dd/MM/yyyy HH:mm')}">23/05/2026 13:40</td>
+            <td>
+              <strong th:text="${pedido.nome}">Luiz Gomes</strong>
+              <div th:text="${pedido.cpf}" style="font-size: 0.72rem; color: var(--gray-200); margin-top: 0.1rem;">000.000.000-00</div>
+            </td>
+            <td th:text="${pedido.celular}">(11) 99999-9999</td>
+            <td>
+              <span class="beer-tag" th:text="${pedido.cerveja}">IPA</span>
+            </td>
+            <td><strong th:text="${pedido.tamanho + 'L'}">30L</strong></td>
+            <td>
+              <span th:text="${#temporals.format(pedido.dataRetirada, 'dd/MM/yy')}">25/05/26</span>
+              <span style="color: var(--gold-light);">➔</span>
+              <span th:text="${#temporals.format(pedido.dataEntrega, 'dd/MM/yy')}">28/05/26</span>
+            </td>
+            <td th:text="${pedido.horario}">14:00</td>
+            <td>
+              <span th:class="${'frete-tag ' + pedido.tipoFrete}" th:text="${'entrega'.equalsIgnoreCase(pedido.tipoFrete) ? 'Entrega' : 'Retirada'}">Retirada</span>
+            </td>
+            <td th:text="${pedido.local != null && !pedido.local.isEmpty() ? pedido.local : '—'}" style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">—</td>
+            <td class="price-text" th:text="${'R$ ' + #numbers.formatDecimal(pedido.valorTotal, 1, 'POINT', 2, 'COMMA')}">R$ 450,00</td>
+            <td>
+              <button class="delete-btn" th:onclick="'confirmarExclusao(' + ${pedido.id} + ')'">
+                <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
+                Excluir
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Caso o banco esteja vazio -->
+      <div th:if="${totalPedidos == 0}" class="empty-state">
+        <div class="empty-icon">🍺</div>
+        <h3>Nenhuma reserva cadastrada</h3>
+        <p>Acesse o site principal, faça um pedido de chopp e os dados aparecerão salvos aqui em tempo real!</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script th:inline="javascript">
+    // Inicialização do Lucide Icons
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+
+    // Função assíncrona para excluir o pedido via API REST do Spring Boot
+    function confirmarExclusao(id) {
+      if (confirm('Deseja realmente cancelar/excluir esta reserva? Os dados serão apagados permanentemente do banco H2.')) {
+        fetch('/api/pedidos/' + id, {
+          method: 'DELETE'
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Erro ao deletar reserva.');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Efeito de transição suave ao remover a linha
+          const row = document.getElementById('row-' + id);
+          if (row) {
+            row.style.transition = 'all 0.5s ease';
+            row.style.opacity = '0';
+            row.style.transform = 'translateX(50px)';
+            setTimeout(() => {
+              row.remove();
+              // Recarrega a página para atualizar os cards estatísticos no topo
+              location.reload();
+            }, 500);
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert('Falha ao excluir o pedido: ' + err.message);
+        });
+      }
+    }
+  </script>
+</body>
+</html>
