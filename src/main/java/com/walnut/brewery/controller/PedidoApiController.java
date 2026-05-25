@@ -19,7 +19,7 @@ public class PedidoApiController {
     @Autowired
     private PedidoRepository pedidoRepository;
 
-    // Endereço de cálculo com base nos preços oficiais definidos no frontend
+    // Tabela de precos do chopp (peguei os mesmos que tao no front)
     private final Map<String, double[]> beerPrices = new HashMap<>();
 
     public PedidoApiController() {
@@ -32,13 +32,13 @@ public class PedidoApiController {
         beerPrices.put("porter", new double[]{480.0, 720.0});
     }
 
-    /**
-     * Endpoint para salvar uma nova reserva de chopp
-     */
+    // Rota que recebe o json do javascript quando clica em comprar
+
     @PostMapping
     public ResponseEntity<?> criarPedido(@RequestBody Pedido pedido) {
         try {
-            // 1. Validação básica de segurança
+            // TODO: validar melhor dps, só testei se nao ta vazio msm
+
             if (pedido.getNome() == null || pedido.getNome().trim().isEmpty() ||
                 pedido.getCpf() == null || pedido.getCpf().trim().isEmpty() ||
                 pedido.getCerveja() == null || pedido.getTamanho() == null) {
@@ -48,7 +48,8 @@ public class PedidoApiController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
             }
 
-            // 2. Cálculo do valor total no servidor (por segurança)
+            // calcula o valor aqui no back pra ser mais seguro
+
             String cervejaKey = pedido.getCerveja().toLowerCase();
             double[] precos = beerPrices.get(cervejaKey);
             if (precos == null) {
@@ -63,10 +64,13 @@ public class PedidoApiController {
 
             pedido.setValorTotal(valorTotal);
 
-            // 3. Salvar no Banco H2
+            // System.out.println("salvando: " + pedido.getNome()); // debug
+            // joga pro banco
+
             Pedido novoPedido = pedidoRepository.save(pedido);
 
-            // 4. Retornar dados salvos com status 201 Created
+            // devolve pro front
+
             return ResponseEntity.status(HttpStatus.CREATED).body(novoPedido);
 
         } catch (Exception e) {
@@ -76,18 +80,16 @@ public class PedidoApiController {
         }
     }
 
-    /**
-     * Endpoint para listar todos os pedidos
-     */
+    // lista tudo pro painel admin
+
     @GetMapping
     public ResponseEntity<List<Pedido>> listarTodos() {
         List<Pedido> pedidos = pedidoRepository.findAll();
         return ResponseEntity.ok(pedidos);
     }
 
-    /**
-     * Endpoint para excluir uma reserva
-     */
+    // deleta pelo id (quando o prof clicar em cancelar no admin)
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> excluirPedido(@PathVariable Long id) {
         if (!pedidoRepository.existsById(id)) {

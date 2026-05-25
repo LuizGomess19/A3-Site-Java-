@@ -1,16 +1,14 @@
-# 🍺 Walnut Brewery — Sistema de Reservas de Chopp Premium (Java Backend)
+# 🍺 Walnut Brewery - Projeto da Faculdade
 
-Este projeto é uma versão aprimorada e integrada do site da **Walnut Brewery** portado para um backend robusto em **Java com Spring Boot v2.7 (compatível com Java 8 ou superior)**. O site une um design visual de altíssimo padrão (responsivo, com animações e carrossel infinito) com recursos de persistência relacional acadêmica perfeitos para apresentação de trabalhos de faculdade.
+Site e sistema de reservas de chopp feito para o trabalho da faculdade.
+O backend foi construído em **Java com Spring Boot**, e os dados dos pedidos ficam salvos no banco de dados H2.
 
----
-
-## 🛠️ Tecnologias Utilizadas
-- **Linguagem**: Java 8 (ou superior)
-- **Framework Principal**: Spring Boot 2.7.18
-- **Persistência / ORM**: Spring Data JPA & Hibernate
-- **Banco de Dados**: H2 Database (embarcado e persistente localmente em arquivo para fins didáticos, não necessita de nenhuma instalação prévia de SGDB).
-- **Engine de Templates**: Thymeleaf (para a visualização administrativa)
-- **Frontend**: HTML5, CSS3 (Design System Premium Dark Navy + Gold) e Vanilla Javascript (Fetch API assíncrona para requisições AJAX).
+## 🛠️ Tecnologias que usei no projeto
+- **Linguagem**: Java 21
+- **Framework**: Spring Boot 3.2.5
+- **Banco de Dados**: H2 (salva num arquivo pra não perder os dados)
+- **Frontend Admin**: Thymeleaf + HTML/CSS
+- **Frontend Principal**: HTML, CSS e JS puros
 - **Gerenciador de Dependências**: Maven
 
 ---
@@ -50,20 +48,19 @@ walnut-brewery-java/
 
 ---
 
-## 🚀 Como Executar o Projeto (Guia para o Professor)
+## 🚀 Como Executar o Projeto
 
-Para rodar este projeto, o único requisito é ter o **Java JDK 8** (ou superior) instalado na máquina. 
+Para rodar este projeto, o único requisito é ter o **Java JDK 21** (ou superior) instalado na máquina. 
 
 ### Opção 1: Rodar pela IDE (Recomendado)
 1. Abra a sua IDE Java de preferência (ex: **IntelliJ IDEA**, **Eclipse** ou **Visual Studio Code**).
 2. Vá em `File > Open...` (Abrir...) e selecione esta pasta raiz `walnut-brewery-java` (a IDE reconhecerá o arquivo `pom.xml` como um projeto Maven e fará a importação e download automático das bibliotecas necessárias).
 3. Localize e abra o arquivo `src/main/java/com/walnut/brewery/WalnutBreweryApplication.java`.
-4. Clique com o botão direito sobre o arquivo ou aperte no botão **Run / Executar** (geralmente representado por um ícone verde de "Play").
-5. O servidor inicializará no Tomcat embarcado na porta **8080** em poucos segundos!
+4. Clique com o botão direito sobre o arquivo ou aperte no botão **Run / Executar**.
+5. O servidor inicializará no Tomcat embarcado na porta **8080**.
 
 ### Opção 2: Rodar pelo Prompt do Windows
 1. Na pasta raiz do projeto, dê dois cliques sobre o arquivo executável `run.cmd` criado especialmente para facilitar a inicialização.
-2. Ele exibirá orientações de execução e tentará inicializar o servidor em segundo plano.
 
 ---
 
@@ -74,22 +71,21 @@ Quando a aplicação estiver rodando com sucesso, você poderá abrir o seu nave
 ### 1. 🌐 Site Principal da Cervejaria
 * **Link**: [http://localhost:8080](http://localhost:8080)
 * **O que testar**: 
-  - Navegue e veja as belíssimas animações de entrada e scroll.
-  - Veja o carrossel infinito CSS de garrafas na seção **Nossa Coleção**.
+  - Navegue e veja as animações.
+  - Veja o carrossel de garrafas na seção **Nossa Coleção**.
   - Vá na seção **Fazer Pedido** (ou no rodapé), preencha o formulário completo de reserva de barril.
   - Perceba que o **Resumo da Reserva** (no painel à direita) se atualiza reativamente em tempo real com base no nome do cliente, tamanho de barril escolhido, rota de entrega e rótulo!
-  - Clique em **Finalizar Reserva**. Os dados serão enviados via JSON assíncrono (AJAX) para o backend Java, que processará o cálculo com segurança e salvará no banco de dados. Uma linda tela de confirmação de sucesso com glassmorphism aparecerá sem precisar recarregar o site!
+  - Clique em **Finalizar Reserva**. Os dados serão enviados via JSON assíncrono (AJAX) para o backend Java, que processará o cálculo com segurança e salvará no banco de dados. Uma tela de confirmação de sucesso aparecerá sem precisar recarregar o site!
 
-### 2. 📊 Painel Administrativo de Controle (O Diferencial)
-* **Link**: [http://localhost:8080/admin](http://localhost:8080/admin)
-* **O que testar**:
-  - Esse é o principal painel onde o professor poderá avaliar seu backend Java integrando com banco de dados!
+### 2. 📊 Painel Administrativo de Controle
+1. Acesse o painel pelo navegador: [http://localhost:8080/admin](http://localhost:8080/admin)
+2. Lá tem a lista com os pedidos e os totais calculados.
+3. Dá pra excluir os testes que a gente faz no site.
   - Ele possui cards estatísticos dinâmicos calculando em tempo real:
     - **Faturamento Estimado** acumulado de todos os pedidos.
     - **Total de Reservas** cadastradas.
     - Contadores específicos de volumetria de barris (**30L** e **50L**).
   - Possui uma tabela elegante listando todos os pedidos registrados de forma cronológica (com ID, Data do Envio, Nome, CPF, WhatsApp, Rótulo, Período de Locação do Chopp, Tipo de Frete e Endereço).
-  - Possui um botão de **Excluir** que envia uma requisição `DELETE` AJAX, fazendo com que a linha do pedido sofra um fade-out suave e desapareça do banco de dados imediatamente.
 
 ### 3. 💾 Console de Gerenciamento do Banco H2
 * **Link**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)

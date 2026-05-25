@@ -15,14 +15,16 @@ public class AdminController {
     @Autowired
     private PedidoRepository pedidoRepository;
 
-    /**
-     * Mapeia o acesso ao Painel do Professor em http://localhost:8080/admin
-     */
+    // Rota da pagina do painel do prof
+
     @GetMapping("/admin")
     public String exibirPainelAdmin(Model model) {
         List<Pedido> pedidos = pedidoRepository.findAll();
 
-        // Calcular estatísticas em tempo real
+        // System.out.println("Acessou o admin");
+
+        // faz as contas pra exibir la no html
+
         double totalFaturamento = 0.0;
         int barris30 = 0;
         int barris50 = 0;
@@ -38,14 +40,16 @@ public class AdminController {
             }
         }
 
-        // Adiciona dados no modelo Thymeleaf
+        // manda as variaveis pro thymeleaf
+
         model.addAttribute("pedidos", pedidos);
         model.addAttribute("totalPedidos", pedidos.size());
         model.addAttribute("totalFaturamento", totalFaturamento);
         model.addAttribute("barris30", barris30);
         model.addAttribute("barris50", barris50);
 
-        // Retorna o template 'admin.html' localizado em src/main/resources/templates/
+        // chama o template admin.html
+
         return "admin";
     }
 }

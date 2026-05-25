@@ -1,6 +1,6 @@
 package com.walnut.brewery.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -54,7 +54,7 @@ public class Pedido {
     @Column(name = "data_pedido", nullable = false, updatable = false)
     private LocalDateTime dataPedido;
 
-    // Define automaticamente a data de criacao do pedido antes de salvar no banco
+    // pega a hora exata que o pedido foi feito pra salvar no banco
     @PrePersist
     protected void onCreate() {
         this.dataPedido = LocalDateTime.now();

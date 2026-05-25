@@ -1,0 +1,5 @@
+com\walnut\brewery\repository\PedidoRepository.class
+com\walnut\brewery\controller\PedidoApiController.class
+com\walnut\brewery\WalnutBreweryApplication.class
+com\walnut\brewery\controller\AdminController.class
+com\walnut\brewery\model\Pedido.class
