@@ -1,104 +1,66 @@
-# 🍺 Walnut Brewery - Projeto da Faculdade
+# 🍺 Walnut Brewery - Sistema de Reservas e Gestão de Chopp
 
-Site e sistema de reservas de chopp feito para o trabalho da faculdade.
-O backend foi construído em **Java com Spring Boot**, e os dados dos pedidos ficam salvos no banco de dados H2.
+Trabalho Prático - Unidade Curricular: Modelos, Métodos e Técnicas de Engenharia de Software (UniBH)
+**Professor:** Lucas Goulart Silva
+**Integrantes:** Pedro Picinin Velloso Vieira - 12410337
+Luiz Antônio Gomes Vicente -12313884
+Leonardo Alves Silva - 124221849
+Sabrina Abade Fernandes Ribeiro - 124222032
+Rafael Moura Souza - 124222140
 
-## 🛠️ Tecnologias que usei no projeto
+---
+
+## 1. Definição do Problema
+O problema identificado pertence ao contexto comercial e operacional de uma cervejaria artesanal local. Atualmente, muitos estabelecimentos desse porte gerenciam reservas de barris de chopp de forma manual (via WhatsApp ou planilhas). Isso gera gargalos no atendimento, erros de cálculo de frete ou valores de barris, e perda de dados importantes.
+
+**Nossa Solução:** Desenvolvemos uma plataforma web (Front-end) integrada a uma API REST (Back-end Java) que automatiza o processo de reserva. O sistema calcula automaticamente os valores com base no rótulo, volume e tipo de entrega, registrando tudo de forma segura em um banco de dados persistente e fornecendo um painel administrativo para a gestão do negócio.
+
+## 2. Levantamento e Análise de Requisitos
+Optamos por uma **abordagem ágil** para a elicitação de requisitos, utilizando Histórias de Usuário (User Stories):
+
+* **US01:** Como cliente, eu quero preencher um formulário de reserva escolhendo o tamanho do barril (30L ou 50L) e o rótulo da cerveja, para garantir meu chopp para um evento de forma autônoma.
+* **US02:** Como cliente, eu quero ver o resumo da minha reserva (valores dos produtos e do frete) atualizado reativamente em tempo real na tela, para saber exatamente quanto vou pagar antes de confirmar o pedido.
+* **US03:** Como administrador da cervejaria, eu quero acessar um painel restrito que me mostre o faturamento estimado, a volumetria de barris vendidos e uma lista cronológica de todas as reservas, para gerenciar as entregas e a operação diária.
+
+## 3. Desenvolvimento da Solução e Arquitetura
+
+O sistema foi desenvolvido utilizando as seguintes tecnologias:
 - **Linguagem**: Java 21
-- **Framework**: Spring Boot 3.2.5
-- **Banco de Dados**: H2 (salva num arquivo pra não perder os dados)
-- **Frontend Admin**: Thymeleaf + HTML/CSS
-- **Frontend Principal**: HTML, CSS e JS puros
-- **Gerenciador de Dependências**: Maven
+- **Framework**: Spring Boot 3.2.5 (Web, Data JPA)
+- **Banco de Dados**: H2 (persistido em arquivo local `./db/walnutdb`)
+- **Frontend**: HTML, CSS, JS puros (Cliente) e Thymeleaf (Admin)
 
----
+### Aplicação dos Princípios SOLID
+O projeto foi refatorado para garantir aderência aos princípios SOLID, com destaque para o **Single Responsibility Principle (SRP)**:
+- Inicialmente, a regra de negócio (cálculo de preços e frete) estava acoplada ao `PedidoApiController`.
+- Refatoramos a arquitetura criando a camada `PedidoService`. Agora, o *Controller* é responsável apenas por gerenciar o tráfego HTTP (requisições e respostas da API), enquanto o *Service* concentra toda a lógica comercial de cálculo e validação. O *Repository* cuida exclusivamente do contrato com o banco de dados.
 
-## 🏗️ Estrutura do Projeto
+### Padrões de Projeto (Design Patterns)
+Utilizamos padrões arquiteturais e de projeto nativos do ecossistema Spring:
+- **Injeção de Dependência (Dependency Injection):** Utilizado via `@Autowired` para desacoplar a criação de objetos. O ciclo de vida do `PedidoRepository` e do `PedidoService` é gerenciado pelo contêiner do Spring.
+- **Singleton:** As classes anotadas com `@Service` e `@RestController` são instanciadas como Singletons pelo Spring, garantindo que apenas uma instância exista em memória durante a execução para otimizar recursos.
 
-```text
-walnut-brewery-java/
-├── pom.xml (Arquivo de configuração de dependências Maven)
-├── run.cmd (Script utilitário de execução facilitada no Windows)
-├── db/
-│   └── walnutdb.mv.db (Arquivo de banco de dados H2 gerado automaticamente)
-└── src/
-    └── main/
-        ├── java/
-        │   └── com/
-        │       └── walnut/
-        │           └── brewery/
-        │               ├── WalnutBreweryApplication.java (Classe de Inicialização)
-        │               ├── model/
-        │               │   └── Pedido.java (Entidade JPA mapeada no banco)
-        │               ├── repository/
-        │               │   └── PedidoRepository.java (Interface JPA CRUD)
-        │               └── controller/
-        │                   ├── PedidoApiController.java (API REST de pedidos: salvar, listar e deletar)
-        │                   └── AdminController.java (Controller Thymeleaf do Painel Administrativo)
-        └── resources/
-            ├── application.properties (Parâmetros de configuração H2, JPA e logging)
-            ├── templates/
-            │   └── admin.html (Painel administrativo do professor em Thymeleaf)
-            └── static/
-                ├── index.html (Página principal premium do site com seção de pedidos reativa)
-                ├── style.css (Estilos CSS unificados do site e painel de pedidos)
-                ├── script.js (Comportamento de scroll, parallax, carrossel e Fetch API)
-                └── assets/ (Imagens oficiais dos rótulos de cerveja da Walnut Brewery)
-```
+### Testes Unitários
+Foram implementados testes unitários utilizando **JUnit 5** e **Mockito**. A classe `PedidoServiceTest` valida as regras de cálculo de valores (com e sem frete) e as validações de exceção da camada de serviço, realizando o *mock* do repositório para isolar o teste do banco de dados real.
 
----
+## 4. Modelagem da Solução
 
-## 🚀 Como Executar o Projeto
+Abaixo apresentamos o Diagrama de Classes focando no Back-end, evidenciando as Entidades, Repositórios, Serviços e Controladores:
+
+![Diagrama de Classes](diagrama-classes.png)
+
+## 5. Como Executar a Aplicação
 
 Para rodar este projeto, o único requisito é ter o **Java JDK 21** (ou superior) instalado na máquina. 
 
-### Opção 1: Rodar pela IDE (Recomendado)
-1. Abra a sua IDE Java de preferência (ex: **IntelliJ IDEA**, **Eclipse** ou **Visual Studio Code**).
-2. Vá em `File > Open...` (Abrir...) e selecione esta pasta raiz `walnut-brewery-java` (a IDE reconhecerá o arquivo `pom.xml` como um projeto Maven e fará a importação e download automático das bibliotecas necessárias).
-3. Localize e abra o arquivo `src/main/java/com/walnut/brewery/WalnutBreweryApplication.java`.
-4. Clique com o botão direito sobre o arquivo ou aperte no botão **Run / Executar**.
-5. O servidor inicializará no Tomcat embarcado na porta **8080**.
+**Passo a passo:**
+1. Faça o clone deste repositório.
+2. Abra o terminal na raiz do projeto e execute o comando usando o Maven Wrapper embutido:
+   * No Windows: `.\mvnw spring-boot:run`
+   * No Linux/Mac: `./mvnw spring-boot:run`
+3. O servidor inicializará no Tomcat embarcado na porta **8080**.
 
-### Opção 2: Rodar pelo Prompt do Windows
-1. Na pasta raiz do projeto, dê dois cliques sobre o arquivo executável `run.cmd` criado especialmente para facilitar a inicialização.
-
----
-
-## 🔗 Endpoints e Rotas Úteis
-
-Quando a aplicação estiver rodando com sucesso, você poderá abrir o seu navegador de internet e acessar os seguintes links locais:
-
-### 1. 🌐 Site Principal da Cervejaria
-* **Link**: [http://localhost:8080](http://localhost:8080)
-* **O que testar**: 
-  - Navegue e veja as animações.
-  - Veja o carrossel de garrafas na seção **Nossa Coleção**.
-  - Vá na seção **Fazer Pedido** (ou no rodapé), preencha o formulário completo de reserva de barril.
-  - Perceba que o **Resumo da Reserva** (no painel à direita) se atualiza reativamente em tempo real com base no nome do cliente, tamanho de barril escolhido, rota de entrega e rótulo!
-  - Clique em **Finalizar Reserva**. Os dados serão enviados via JSON assíncrono (AJAX) para o backend Java, que processará o cálculo com segurança e salvará no banco de dados. Uma tela de confirmação de sucesso aparecerá sem precisar recarregar o site!
-
-### 2. 📊 Painel Administrativo de Controle
-1. Acesse o painel pelo navegador: [http://localhost:8080/admin](http://localhost:8080/admin)
-2. Lá tem a lista com os pedidos e os totais calculados.
-3. Dá pra excluir os testes que a gente faz no site.
-  - Ele possui cards estatísticos dinâmicos calculando em tempo real:
-    - **Faturamento Estimado** acumulado de todos os pedidos.
-    - **Total de Reservas** cadastradas.
-    - Contadores específicos de volumetria de barris (**30L** e **50L**).
-  - Possui uma tabela elegante listando todos os pedidos registrados de forma cronológica (com ID, Data do Envio, Nome, CPF, WhatsApp, Rótulo, Período de Locação do Chopp, Tipo de Frete e Endereço).
-
-### 3. 💾 Console de Gerenciamento do Banco H2
-* **Link**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
-* **Parâmetros de Acesso**:
-  - **JDBC URL**: `jdbc:h2:file:./db/walnutdb`
-  - **User Name**: `sa`
-  - **Password**: (Deixar em branco)
-* **O que testar**: Clique em **Connect** para visualizar a estrutura das tabelas SQL geradas automaticamente pelo Hibernate JPA e rodar queries SQL de teste.
-
----
-
-## 📌 Diferenciais Técnicos e Acadêmicos Avaliados
-- **Segurança no Backend**: O cálculo de valores de barris e frete é revalidado e efetuado diretamente no backend (`PedidoApiController.java`), evitando falsificação de preços por requisições de frontend alteradas.
-- **Banco Persistente**: Utilização de arquivo local (`./db/walnutdb`) para o banco de dados. Isso garante que, mesmo que você reinicie a aplicação ou desligue a máquina, os pedidos criados não sumirão!
-- **Data Auditoring**: Uso de `@PrePersist` para carimbar de forma automática e imutável a data e horário exato em que o pedido foi originado pelo cliente.
-- **Uso do Lombok**: Clean code na modelagem das tabelas do banco, economizando centenas de linhas de boilerplate desnecessário.
+**Acessando as Interfaces:**
+* **Site do Cliente:** [http://localhost:8080](http://localhost:8080)
+* **Painel Administrativo:** [http://localhost:8080/admin](http://localhost:8080/admin)
+* **Console H2:** [http://localhost:8080/h2-console](http://localhost:8080/h2-console) (JDBC URL: `jdbc:h2:file:./db/walnutdb`, User: `sa`, Senha em branco).
