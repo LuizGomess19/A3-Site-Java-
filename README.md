@@ -13,7 +13,19 @@ Rafael Moura Souza - 124222140
 ## 1. Definição do Problema
 O problema identificado pertence ao contexto comercial e operacional de uma cervejaria artesanal local. Atualmente, muitos estabelecimentos desse porte gerenciam reservas de barris de chopp de forma manual (via WhatsApp ou planilhas). Isso gera gargalos no atendimento, erros de cálculo de frete ou valores de barris, e perda de dados importantes.
 
-**Nossa Solução:** Desenvolvemos uma plataforma web (Front-end) integrada a uma API REST (Back-end Java) que automatiza o processo de reserva. O sistema calcula automaticamente os valores com base no rótulo, volume e tipo de entrega, registrando tudo de forma segura em um banco de dados persistente e fornecendo um painel administrativo para a gestão do negócio.
+Além disso, a ausência de autenticação para acesso ao painel administrativo compromete a segurança das informações do negócio, e a falta de indicadores gerenciais dificulta o acompanhamento do desempenho das vendas e da operação.
+
+**Nossa Solução:** Desenvolvemos uma plataforma web (Front-end) integrada a uma API REST (Back-end Java) que automatiza o processo de reserva. O sistema calcula automaticamente os valores com base no rótulo, volume e tipo de entrega, registrando todas as reservas de forma segura em um banco de dados persistente e disponibilizando um painel administrativo para a gestão do negócio.
+
+Como evolução do projeto, foram propostas as seguintes melhorias:
+
+* **Controle de Estoque:** implementação de um módulo responsável por gerenciar a quantidade disponível de barris por rótulo e volume, impedindo que sejam realizadas reservas de produtos indisponíveis e atualizando automaticamente o estoque após cada confirmação de reserva.
+
+* **Autenticação do Administrador:** inclusão de um mecanismo de login para restringir o acesso ao painel administrativo, garantindo que apenas usuários autorizados possam visualizar informações gerenciais e administrar as reservas do sistema.
+
+* **Dashboard Gerencial Aprimorado:** expansão do painel administrativo com indicadores e estatísticas, como faturamento estimado, quantidade de reservas realizadas, litros vendidos e rótulos mais vendidos, oferecendo maior apoio à tomada de decisão e ao acompanhamento do desempenho da cervejaria.
+
+Com essas melhorias, a solução passa a oferecer maior confiabilidade operacional, segurança de acesso e suporte gerencial, tornando o processo de reservas mais eficiente e reduzindo falhas comuns presentes no gerenciamento manual.
 
 ## 2. Levantamento e Análise de Requisitos
 Optamos por uma **abordagem ágil** para a elicitação de requisitos, utilizando Histórias de Usuário (User Stories):
