@@ -17,6 +17,9 @@ class PedidoServiceTest {
     @Mock
     private PedidoRepository pedidoRepository;
 
+    @Mock
+    private EstoqueService estoqueService;
+
     @InjectMocks
     private PedidoService pedidoService;
 
@@ -32,13 +35,18 @@ class PedidoServiceTest {
         pedido.setTamanho(50);
         pedido.setTipoFrete("entrega");
 
-        when(pedidoRepository.save(any(Pedido.class))).thenReturn(pedido);
+      doNothing().when(estoqueService).verificarDisponibilidade(any(Pedido.class));
+      doNothing().when(estoqueService).baixarEstoque(any(Pedido.class));
 
-        pedidoService.processarESalvarPedido(pedido);
+      when(pedidoRepository.save(any(Pedido.class))).thenReturn(pedido);
+
+      pedidoService.processarESalvarPedido(pedido);
 
         // IPA 50L (680.0) + Entrega (80.0) = 760.0
         assertEquals(760.0, pedido.getValorTotal());
         verify(pedidoRepository, times(1)).save(pedido);
+        verify(estoqueService).verificarDisponibilidade(pedido);
+        verify(estoqueService).baixarEstoque(pedido);
     }
 
     @Test
@@ -54,8 +62,15 @@ class PedidoServiceTest {
 
         // Pilsen 30L (380.0) + Retirada (0.0) = 380.0
         assertEquals(380.0, pedido.getValorTotal());
-    }
+        verify(estoqueService).verificarDisponibilidade(pedido);
+        verify(estoqueService).baixarEstoque(pedido);
+ 
+        doNothing().when(estoqueService).verificarDisponibilidade(any(Pedido.class));
+        doNothing().when(estoqueService).baixarEstoque(any(Pedido.class));
 
+        when(pedidoRepository.save(any(Pedido.class))).thenReturn(pedido);
+    }
+    
     @Test
     void deveLancarExcecaoQuandoCervejaInvalida() {
         Pedido pedido = new Pedido();
@@ -67,4 +82,25 @@ class PedidoServiceTest {
 
         assertEquals("Rótulo de cerveja inválido.", exception.getMessage());
     }
+
+@Test
+void deveLancarExcecaoQuandoNaoHaEstoque() {
+
+    Pedido pedido = new Pedido();
+    pedido.setCerveja("ipa");
+    pedido.setTamanho(50);
+    pedido.setTipoFrete("entrega");
+
+    doThrow(new IllegalArgumentException("Produto indisponível no momento."))
+            .when(estoqueService)
+            .verificarDisponibilidade(any(Pedido.class));
+
+    Exception exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> pedidoService.processarESalvarPedido(pedido));
+
+    assertEquals("Produto indisponível no momento.", exception.getMessage());
+
+    verify(pedidoRepository, never()).save(any(Pedido.class));
 }
+    }
