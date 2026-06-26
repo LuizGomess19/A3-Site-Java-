@@ -15,6 +15,9 @@ public class PedidoService {
     @Autowired
     private PedidoRepository pedidoRepository;
 
+    @Autowired
+    private EstoqueService estoqueService;
+
     private final Map<String, double[]> beerPrices = new HashMap<>();
 
     public PedidoService() {
@@ -26,20 +29,28 @@ public class PedidoService {
         beerPrices.put("porter", new double[]{480.0, 720.0});
     }
 
-    public Pedido processarESalvarPedido(Pedido pedido) {
-        String cervejaKey = pedido.getCerveja().toLowerCase();
-        double[] precos = beerPrices.get(cervejaKey);
-        
-        if (precos == null) {
-            throw new IllegalArgumentException("Rótulo de cerveja inválido.");
-        }
+   public Pedido processarESalvarPedido(Pedido pedido) {
 
-        double valorBarril = (pedido.getTamanho() == 50) ? precos[1] : precos[0];
-        double valorFrete = "entrega".equalsIgnoreCase(pedido.getTipoFrete()) ? 80.0 : 0.0;
-        
-        pedido.setValorTotal(valorBarril + valorFrete);
-        
-        return pedidoRepository.save(pedido);
+    String cervejaKey = pedido.getCerveja().toLowerCase();
+    double[] precos = beerPrices.get(cervejaKey);
+
+    if (precos == null) {
+        throw new IllegalArgumentException("Rótulo de cerveja inválido.");
+    }
+       
+    estoqueService.verificarDisponibilidade(pedido);
+
+    double valorBarril = (pedido.getTamanho() == 50) ? precos[1] : precos[0];
+    double valorFrete = "entrega".equalsIgnoreCase(pedido.getTipoFrete()) ? 80.0 : 0.0;
+
+    pedido.setValorTotal(valorBarril + valorFrete);
+
+    Pedido pedidoSalvo = pedidoRepository.save(pedido);
+       
+    estoqueService.baixarEstoque(pedido);
+
+    return pedidoSalvo;
+}
     }
 
     public List<Pedido> listarTodos() {
