@@ -51,9 +51,9 @@ O projeto foi estruturado seguindo os princípios SOLID, destacando-se:
 
 * **Dependency Inversion Principle (DIP):** Os serviços dependem de abstrações fornecidas pelo Spring por meio da Injeção de Dependências (`@Autowired`), reduzindo o acoplamento entre controladores, serviços e repositórios e facilitando a manutenção e os testes da aplicação.
 
-* - **Service Layer:** A lógica de negócio foi organizada em classes de serviço (`PedidoService` e `EstoqueService`), separando as regras de negócio da camada de controle e promovendo maior reutilização e manutenção do código.
+* **Service Layer:** A lógica de negócio foi organizada em classes de serviço (`PedidoService` e `EstoqueService`), separando as regras de negócio da camada de controle e promovendo maior reutilização e manutenção do código.
  
-  * - **Testes Unitários:** Foram implementados testes unitários utilizando JUnit 5 e Mockito. A classe PedidoServiceTest valida o cálculo do valor das reservas, as validações de rótulos de cerveja e o novo fluxo de controle de estoque, garantindo que pedidos sejam processados apenas quando houver disponibilidade. O uso do Mockito permitiu isolar os testes das dependências externas, simulando o comportamento dos repositórios e serviços utilizados pela aplicação.
+* **Testes Unitários:** Foram implementados testes unitários utilizando JUnit 5 e Mockito. A classe PedidoServiceTest valida o cálculo do valor das reservas, as validações de rótulos de cerveja e o novo fluxo de controle de estoque, garantindo que pedidos sejam processados apenas quando houver disponibilidade. O uso do Mockito permitiu isolar os testes das dependências externas, simulando o comportamento dos repositórios e serviços utilizados pela aplicação.
 
 ## 4. Modelagem da Solução
 
