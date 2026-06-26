@@ -37,23 +37,23 @@ Optamos por uma **abordagem ágil** para a elicitação de requisitos, utilizand
 ## 3. Desenvolvimento da Solução e Arquitetura
 
 O sistema foi desenvolvido utilizando as seguintes tecnologias:
-- **Linguagem**: Java 21
-- **Framework**: Spring Boot 3.2.5 (Web, Data JPA)
-- **Banco de Dados**: H2 (persistido em arquivo local `./db/walnutdb`)
-- **Frontend**: HTML, CSS, JS puros (Cliente) e Thymeleaf (Admin)
+- **Linguagem:** Java 21
+- **Framework:** Spring Boot 3.2.5 (Web, Data JPA e Spring Security)
+- **Banco de Dados:** H2
+- **Frontend:** HTML, CSS, JavaScript e Thymeleaf
+- **Testes:** JUnit 5 e Mockito
 
 ### Aplicação dos Princípios SOLID
-O projeto foi refatorado para garantir aderência aos princípios SOLID, com destaque para o **Single Responsibility Principle (SRP)**:
-- Inicialmente, a regra de negócio (cálculo de preços e frete) estava acoplada ao `PedidoApiController`.
-- Refatoramos a arquitetura criando a camada `PedidoService`. Agora, o *Controller* é responsável apenas por gerenciar o tráfego HTTP (requisições e respostas da API), enquanto o *Service* concentra toda a lógica comercial de cálculo e validação. O *Repository* cuida exclusivamente do contrato com o banco de dados.
 
-### Padrões de Projeto (Design Patterns)
-Utilizamos padrões arquiteturais e de projeto nativos do ecossistema Spring:
-- **Injeção de Dependência (Dependency Injection):** Utilizado via `@Autowired` para desacoplar a criação de objetos. O ciclo de vida do `PedidoRepository` e do `PedidoService` é gerenciado pelo contêiner do Spring.
-- **Singleton:** As classes anotadas com `@Service` e `@RestController` são instanciadas como Singletons pelo Spring, garantindo que apenas uma instância exista em memória durante a execução para otimizar recursos.
+O projeto foi estruturado seguindo os princípios SOLID, destacando-se:
 
-### Testes Unitários
-Foram implementados testes unitários utilizando **JUnit 5** e **Mockito**. A classe `PedidoServiceTest` valida as regras de cálculo de valores (com e sem frete) e as validações de exceção da camada de serviço, realizando o *mock* do repositório para isolar o teste do banco de dados real.
+* **Single Responsibility Principle (SRP):** Cada classe possui uma responsabilidade bem definida. O `PedidoService` concentra apenas as regras relacionadas ao processamento dos pedidos, enquanto o `EstoqueService` é responsável exclusivamente pelo gerenciamento do estoque e o `AdminController` apenas prepara as informações para apresentação no painel administrativo.
+
+* **Dependency Inversion Principle (DIP):** Os serviços dependem de abstrações fornecidas pelo Spring por meio da Injeção de Dependências (`@Autowired`), reduzindo o acoplamento entre controladores, serviços e repositórios e facilitando a manutenção e os testes da aplicação.
+
+* - **Service Layer:** A lógica de negócio foi organizada em classes de serviço (`PedidoService` e `EstoqueService`), separando as regras de negócio da camada de controle e promovendo maior reutilização e manutenção do código.
+ 
+  * - **Testes Unitários:** Foram implementados testes unitários utilizando JUnit 5 e Mockito. A classe PedidoServiceTest valida o cálculo do valor das reservas, as validações de rótulos de cerveja e o novo fluxo de controle de estoque, garantindo que pedidos sejam processados apenas quando houver disponibilidade. O uso do Mockito permitiu isolar os testes das dependências externas, simulando o comportamento dos repositórios e serviços utilizados pela aplicação.
 
 ## 4. Modelagem da Solução
 
@@ -61,7 +61,12 @@ Abaixo apresentamos o Diagrama de Classes focando no Back-end, evidenciando as E
 
 ![Diagrama de Classes](diagrama-classes.png)
 
-## 5. Como Executar a Aplicação
+## 5. Melhorias implementadas 
+* Controle de Estoque;
+* Login do Administrador com Spring Security;
+* Dashboard Gerencial com novos indicadores.
+
+## 6. Como Executar a Aplicação
 
 Para rodar este projeto, o único requisito é ter o **Java JDK 21** (ou superior) instalado na máquina. 
 
