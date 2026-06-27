@@ -33,7 +33,9 @@ Optamos por uma **abordagem ágil** para a elicitação de requisitos, utilizand
 * **US01:** Como cliente, eu quero preencher um formulário de reserva escolhendo o tamanho do barril (30L ou 50L) e o rótulo da cerveja, para garantir meu chopp para um evento de forma autônoma.
 * **US02:** Como cliente, eu quero ver o resumo da minha reserva (valores dos produtos e do frete) atualizado reativamente em tempo real na tela, para saber exatamente quanto vou pagar antes de confirmar o pedido.
 * **US03:** Como administrador da cervejaria, eu quero acessar um painel restrito que me mostre o faturamento estimado, a volumetria de barris vendidos e uma lista cronológica de todas as reservas, para gerenciar as entregas e a operação diária.
-
+* **US04:** Como administrador, eu quero que o sistema controle automaticamente a quantidade de barris disponíveis em estoque, impedindo reservas de produtos indisponíveis.
+* **US05:** Como administrador, eu quero realizar autenticação antes de acessar o painel administrativo, para garantir que apenas pessoas autorizadas possam visualizar informações gerenciais.
+* **US06:** Como administrador, eu quero visualizar indicadores gerenciais no painel administrativo para acompanhar o desempenho das vendas.
 ## 3. Desenvolvimento da Solução e Arquitetura
 
 O sistema foi desenvolvido utilizando as seguintes tecnologias:
