@@ -52,11 +52,14 @@ if ("entrega".equalsIgnoreCase(p.getTipoFrete())) {
     retiradas++;
 }
 
-String cerveja = p.getCerveja().toLowerCase();
-vendasPorCerveja.put(
-        cerveja,
-        vendasPorCerveja.getOrDefault(cerveja, 0) + 1
-);
+String cerveja = p.getCerveja();
+
+if (cerveja != null) {
+    cerveja = cerveja.toLowerCase();
+    vendasPorCerveja.put(
+            cerveja,
+            vendasPorCerveja.getOrDefault(cerveja, 0) + 1
+    );
                 } else if (p.getTamanho() == 50) {
                     barris50++;
                 }
@@ -85,6 +88,7 @@ for (Map.Entry<String, Integer> entry : vendasPorCerveja.entrySet()) {
         model.addAttribute("entregas", entregas);
         model.addAttribute("retiradas", retiradas);
         model.addAttribute("cervejaMaisVendida", cervejaMaisVendida);
+
         return "admin";
     }
 }
