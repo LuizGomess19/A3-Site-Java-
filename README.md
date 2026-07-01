@@ -58,10 +58,21 @@ O projeto foi estruturado seguindo os princípios SOLID, destacando-se:
 * **Testes Unitários:** Foram implementados testes unitários utilizando JUnit 5 e Mockito. A classe PedidoServiceTest valida o cálculo do valor das reservas, as validações de rótulos de cerveja e o novo fluxo de controle de estoque, garantindo que pedidos sejam processados apenas quando houver disponibilidade. O uso do Mockito permitiu isolar os testes das dependências externas, simulando o comportamento dos repositórios e serviços utilizados pela aplicação.
 
 ## 4. Modelagem da Solução
+## 📁 Documentação
 
-Abaixo apresentamos o Diagrama de Classes focando no Back-end, evidenciando as Entidades, Repositórios, Serviços e Controladores:
+```
+docs/
+└── diagramas/
+    └── diagrama-classes.png
+```
 
-![Diagrama de Classes](diagrama-classes.png)
+### Diagrama de Classes
+
+O diagrama UML atualizado do projeto pode ser encontrado em:
+
+`docs/diagramas/diagrama-classes.png`
+
+![Diagrama de Classes](docs/diagramas/diagrama-classes.png)
 
 ## 5. Melhorias implementadas 
 * Controle de Estoque;
